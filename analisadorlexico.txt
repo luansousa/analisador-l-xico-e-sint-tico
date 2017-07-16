@@ -1,0 +1,51 @@
+%{
+#include<stdio.h>
+#include<stdlib.h>
+#include "y.tab.h"
+%}
+%option yylineno
+%option noyywrap
+
+BRANCO    [\n| |\t| \r] 
+DIGITO    [0-9]  
+LETRA     [a-zA-Z]
+id {LETRA}({LETRA}|{DIGITO})*  
+
+
+
+%%
+"+"                  {printf("Operador de Adição:%s \n",yytext);return ADICAO;}
+"-"                  {printf("Operador de Subtração:%s \n",yytext);return SUBTRACAO;}
+"*"                  {printf("Operador de Multiplicação:%s \n",yytext);return MULTIPLICACAO;}
+"/"                  {printf("Operador de Divisão:%s \n",yytext);return DIVISAO;}
+">"                  {printf("Sinal de Maior:%s \n",yytext);return MAIOR;}
+"<"                  {printf("Sinal de Menor:%s \n",yytext);return MENOR;}
+"!="                 {printf("Sinal de Diferente:%s \n",yytext);return DIFERENTE;} 
+"("                  {printf("Inicio de parentesis:%s \n",yytext);return INIPAR;}
+")"                  {printf("Fecha de parentesis:%s \n",yytext);return FIMPAR;} 
+";"                  {printf("Fecha uma sentença:%s \n",yytext);return FECHASENT;}
+"="                  {printf("Sinal de atribuição:%s \n",yytext);return ATRIBUICAO;}
+"=="                 {printf("Sinal de igualdade:%s \n",yytext);return IGUALDADE;}
+"{"                  {printf("Abre chaves:%s \n",yytext);return INICHA;}
+"}"                  {printf("Fecha chaves:%s \n",yytext);return FECCHA;}
+"int"                {printf("Tipo inteiro:%s \n",yytext);return INTEIRO;} 
+"float"              {printf("Tipo ponto flutuante:%s \n",yytext);return FLOAT;}
+"char"               {printf("Tipo caractere:%s \n",yytext);return CHAR;} 
+"boolean"            {printf("Tipo booleano:%s \n",yytext);return BOOLEANO;}
+"if"                 {printf("Estrutura condicional:%s \n",yytext);return ESTRUTURA_CONDICIONAL;} 
+"for"                {printf("Estrutura iterativa:%s \n",yytext);return ESTRUTURA_ITERATIVA;}
+"while"              {printf("Estrutura Iterativa:%s \n",yytext);return ESTRUTURA_ITERATIVA;}
+{LETRA}              {printf("Uma letra:%s \n",yytext);return LETRA;}
+{DIGITO}+            {printf("Um número:%s \n",yytext);return NUMERO;}
+{id}                 {printf("Um identificador:%s \n",yytext);return IDENTIFICADOR;} 
+
+
+%%
+
+int main(){
+  printf("Digite uma cadeia de caracteres");		
+  yylex();
+  printf("Terminou a análise \n");		
+
+
+}
